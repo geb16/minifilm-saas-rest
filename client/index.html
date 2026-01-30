@@ -1,0 +1,333 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>MiniFilm Auth</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
+
+      :root {
+        color-scheme: light;
+        --bg-start: #f2f6f5;
+        --bg-end: #f7f3eb;
+        --ink: #121821;
+        --muted: #4c5664;
+        --card: #ffffff;
+        --stroke: #d6d9dd;
+        --accent: #1f6a5b;
+        --accent-strong: #0d3f36;
+        --accent-soft: rgba(31, 106, 91, 0.14);
+        --shadow: 0 20px 50px -36px rgba(17, 25, 40, 0.6);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Manrope", "Segoe UI", Tahoma, sans-serif;
+        color: var(--ink);
+        background: radial-gradient(circle at 10% 15%, #ffffff 0%, transparent 35%),
+          radial-gradient(circle at 90% 10%, #eef4ff 0%, transparent 38%),
+          linear-gradient(145deg, var(--bg-start) 0%, var(--bg-end) 70%, #eef1f8 100%);
+        padding: 36px 20px 56px;
+        display: flex;
+        justify-content: center;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: linear-gradient(transparent 95%, rgba(20, 30, 40, 0.03) 100%),
+          linear-gradient(90deg, transparent 95%, rgba(20, 30, 40, 0.03) 100%);
+        background-size: 48px 48px;
+        pointer-events: none;
+        opacity: 0.35;
+      }
+
+      .page {
+        width: min(1120px, 100%);
+        display: flex;
+        flex-direction: column;
+        gap: 26px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero {
+        background: var(--card);
+        border: 1px solid var(--stroke);
+        border-radius: 24px;
+        padding: 30px 32px;
+        box-shadow: var(--shadow);
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 320px;
+        gap: 24px;
+        align-items: center;
+      }
+
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.35em;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--muted);
+      }
+
+      h1 {
+        margin: 12px 0 10px;
+        font-size: clamp(2rem, 2.8vw, 2.6rem);
+      }
+
+      p {
+        margin: 0 0 18px;
+        color: var(--muted);
+        max-width: 60ch;
+      }
+
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .pill {
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent-strong);
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+      }
+
+      .action-card {
+        background: linear-gradient(160deg, #f9fbfb 0%, #f0f6f4 100%);
+        border: 1px solid rgba(31, 106, 91, 0.18);
+        border-radius: 18px;
+        padding: 18px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        box-shadow: inset 0 0 0 1px rgba(31, 106, 91, 0.03);
+      }
+
+      .action-title {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--accent-strong);
+      }
+
+      .button-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .btn {
+        border: 1px solid transparent;
+        border-radius: 999px;
+        padding: 10px 20px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 120ms ease, box-shadow 120ms ease;
+      }
+
+      .btn.primary {
+        background: var(--accent);
+        color: #ffffff;
+        box-shadow: 0 12px 22px -16px rgba(15, 60, 50, 0.75);
+      }
+
+      .btn.ghost {
+        background: #ffffff;
+        color: var(--accent-strong);
+        border-color: rgba(31, 106, 91, 0.35);
+      }
+
+      .btn.small {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+      }
+
+      .btn:focus-visible {
+        outline: 3px solid rgba(31, 106, 91, 0.28);
+        outline-offset: 2px;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .action-note {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+
+      .grid {
+        display: grid;
+        gap: 18px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--stroke);
+        border-radius: 18px;
+        padding: 20px 22px;
+        box-shadow: var(--shadow);
+        min-height: 170px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .card.wide {
+        grid-column: 1 / -1;
+      }
+
+      .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .card-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: var(--muted);
+      }
+
+      h3 {
+        margin: 0;
+        font-size: 1.08rem;
+      }
+
+      .mono {
+        font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+        font-size: 0.85rem;
+        background: #f4f6fb;
+        border-radius: 12px;
+        padding: 14px;
+        min-height: 80px;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      #access-token {
+        max-height: 220px;
+        overflow-y: auto;
+      }
+
+      #api-output {
+        min-height: 110px;
+      }
+
+      @media (max-width: 900px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 640px) {
+        body {
+          padding: 24px 16px 32px;
+        }
+
+        .hero,
+        .card {
+          padding: 20px;
+        }
+
+        .card-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="hero">
+        <div>
+          <div class="eyebrow">MiniFilm</div>
+          <h1>MiniFilm Cognito Login</h1>
+          <p>
+            Sign in with the Cognito Hosted UI, review your access token, and
+            validate the secured films API.
+          </p>
+          <div class="pill-row">
+            <span class="pill">Hosted UI</span>
+            <span class="pill">OAuth 2.0 + PKCE</span>
+            <span class="pill">Cognito Verified</span>
+          </div>
+        </div>
+        <div class="action-card">
+          <div class="action-title">Authentication</div>
+          <div class="button-row">
+            <button id="signIn" class="btn primary">Sign In</button>
+            <button id="signOut" class="btn ghost">Log out</button>
+          </div>
+          <div class="action-note">
+            Status updates after sign in. Tokens are shown below.
+          </div>
+        </div>
+      </header>
+
+      <main class="grid">
+        <section class="card">
+          <div class="label">User</div>
+          <h3>Signed-in identity</h3>
+          <pre id="email" class="mono"></pre>
+        </section>
+
+        <section class="card">
+          <div class="label">Token</div>
+          <h3>Access token</h3>
+          <pre id="access-token" class="mono"></pre>
+        </section>
+
+        <section class="card wide">
+          <div class="card-header">
+            <h3>API tools</h3>
+            <div class="card-actions">
+              <button id="healthCheck" class="btn small ghost">
+                Health Check
+              </button>
+              <button id="callApi" class="btn small">Call API</button>
+            </div>
+          </div>
+          <pre id="api-output" class="mono"></pre>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
