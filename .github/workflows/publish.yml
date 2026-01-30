@@ -15,6 +15,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Docker meta (server)
+        id: meta-server
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/minifilm-server
+          tags: |
+            type=sha
+            type=raw,value=latest
+
+      - name: Docker meta (client)
+        id: meta-client
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/minifilm-client
+          tags: |
+            type=sha
+            type=raw,value=latest
+
       - name: Log in to GHCR
         uses: docker/login-action@v3
         with:
@@ -28,7 +46,8 @@ jobs:
           context: .
           file: server/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/minifilm-server:latest
+          tags: ${{ steps.meta-server.outputs.tags }}
+          labels: ${{ steps.meta-server.outputs.labels }}
 
       - name: Build and push UI
         uses: docker/build-push-action@v6
@@ -36,4 +55,5 @@ jobs:
           context: .
           file: client/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/minifilm-client:latest
+          tags: ${{ steps.meta-client.outputs.tags }}
+          labels: ${{ steps.meta-client.outputs.labels }}
