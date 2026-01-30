@@ -293,6 +293,7 @@
           <div class="button-row">
             <button id="signIn" class="btn primary">Sign In</button>
             <button id="signOut" class="btn ghost">Log out</button>
+            <button id="signUp" class="btn ghost">Create account</button>
           </div>
           <div class="action-note">
             Status updates after sign in. Tokens are shown below.
@@ -320,9 +321,19 @@
               <button id="healthCheck" class="btn small ghost">
                 Health Check
               </button>
+              <button id="createFilm" class="btn small ghost">
+                Create Film
+              </button>
               <button id="callApi" class="btn small">Call API</button>
             </div>
           </div>
+          <input
+            id="filmTitle"
+            class="mono"
+            type="text"
+            placeholder="Film title"
+            aria-label="Film title"
+          />
           <pre id="api-output" class="mono"></pre>
         </section>
       </main>
