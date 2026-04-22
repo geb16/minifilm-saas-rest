@@ -1,7 +1,7 @@
 import { CognitoJwtVerifier } from "aws-jwt-verify";
 
-const USER_POOL_ID = process.env.COGNITO_USER_POOL_ID ?? "eu-west-2_2s17PBaHM";
-const CLIENT_ID = process.env.COGNITO_CLIENT_ID ?? "m0n4l2e3kop1092sm28c8hdgh";
+const USER_POOL_ID = process.env.COGNITO_USER_POOL_ID;
+const CLIENT_ID = process.env.COGNITO_CLIENT_ID;
 
 // Verifies signature via JWKS + checks issuer/claims
 const verifier = CognitoJwtVerifier.create({
