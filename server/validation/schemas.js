@@ -2,13 +2,13 @@ import { z } from "zod";
 
 // Registration input validation
 export const registerSchema = z.object({
-  email: z.string().email(),
+  email: z.string().pipe(z.email()),
   password: z.string().min(8) // SaaS minimum
 });
 
 // Login validation
 export const loginSchema = z.object({
-  email: z.string().email(),
+  email: z.string().pipe(z.email()),
   password: z.string().min(1)
 });
 
